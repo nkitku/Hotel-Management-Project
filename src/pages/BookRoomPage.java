@@ -517,21 +517,21 @@ public class BookRoomPage extends javax.swing.JFrame {
                 int code = JOptionPane.showConfirmDialog(this, "Room No. " + this.roomno + " is booked for Mr./Ms. " + this.cname + " for "
                         + "diffd..!", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
                 if (code == JOptionPane.YES_OPTION) {
-                    String sql = "INSERT INTO `bookingtable` (`room_no`, `date_fro`, `date_to`, `no_of_day`)"
+                    String sql = "INSERT INTO `booking` (`room_no`, `arrival`, `departure`, `total_days`)"
                             + " VALUES ( '" + this.roomno + "', '" + this.dt1 + "', '" + this.dt2 + "', " + this.diffd + ");";
 
                     Statement mysqlStatement = this.mysqlConnection.createStatement();
                     mysqlStatement.executeUpdate(sql);
-                    sql = "SELECT * FROM BOOKINGTABLE WHERE ROOM_NO='" + roomno + "' AND DATE_FRO='" + dt1 + "' AND DATE_TO='" + dt2 + "';";
+                    sql = "SELECT * FROM booking WHERE ROOM_NO='" + roomno + "' AND arrival='" + dt1 + "' AND departure='" + dt2 + "';";
                     mysqlStatement = this.mysqlConnection.createStatement();
                     this.rs = mysqlStatement.executeQuery(sql);
                     this.rs.next();
                     this.bookid = this.rs.getString(1);
-                    sql = "INSERT INTO `custdetail` (`Cust_name`, `Cust_add`, `Cust_city`, `Cust_state`, `Cust_country`, `Cust_ph`, "
-                            + "`Cust_proof`, `Cust_adult`, `Cust_child`, `Cust_mar_stat`, `Cust_id_no`, `Cust_nation`, `Cust_purpos`, "
-                            + "`Cust_bill`, `book_id`)"
-                            + " VALUES ('" + this.cname + "','" + this.cadd + "', '" + this.ccity + "', '" + this.cstat + "', '" + this.ccoun + "', '" + cph + "', '" + cproof + "',"
-                            + " '" + this.cadult + "', '" + this.cchild + "', '" + this.cmars + "', '" + this.cidno + "', '" + this.cnation + "', '" + cpur + "'," + amount + ", " + bookid + ");";
+                    sql = "insert into `visitors` (`visitor_name`, `visitor_add`, `visitor_city`, `visitor_state`, `visitor_country`, `visitor_ph`, "
+                            + "`visitor_proof`, `total_adults`, `total_childs`, `visitor_mar_stat`, `visitor_id_no`, `visitor_nation`, `visitor_purpos`, "
+                            + "`visitor_bill`, `book_id`)"
+                            + " values ('" + this.cname + "','" + this.cadd + "', '" + this.ccity + "', '" + this.cstat + "', '" + this.ccoun + "', '" + this.cph + "', '" + this.cproof + "',"
+                            + " '" + this.cadult + "', '" + this.cchild + "', '" + this.cmars + "', '" + this.cidno + "', '" + this.cnation + "', '" + this.cpur + "'," + this.amount + ", " + this.bookid + ");";
                     mysqlStatement = mysqlConnection.createStatement();
                     mysqlStatement.executeUpdate(sql);
                     JOptionPane.showMessageDialog(this, "Room Booked!!");

@@ -27,9 +27,6 @@ public class MySQLService {
         } else {
             String[] mysqlConfig = txt.split(System.getProperty("line.separator"));
             System.out.println(Arrays.toString(mysqlConfig));
-            // TA.read(new FileReader("C:\\password.txt"), null);
-            // Class.forName("com.mysql.jdbc.Driver");
-            // con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel", "root", TA.getText());
             this.connection = DriverManager.getConnection(mysqlConfig[0].trim(), mysqlConfig[1].trim(), mysqlConfig[2].trim());
         }
 
@@ -37,8 +34,6 @@ public class MySQLService {
 
     private String readFile(String fileName) {
         try {
-            // InputStreamReader n = new InputStreamReader(getClass().getResourceAsStream(fileName));
-            // InputStreamReader n = new InputStreamReader(new FileInputStream(fileName));
             final FileReader n = new FileReader(fileName);
             final BufferedReader reader = new BufferedReader(n);
             final StringBuilder stringBuilder = new StringBuilder();

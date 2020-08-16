@@ -333,7 +333,7 @@ public class RoomMgmtPage extends javax.swing.JFrame {
         this.getContentPane().setBackground(new java.awt.Color(153, 255, 153));
         try {
             this.mysqlConnection = this.mySQLService.getConnection();
-            final String query = "SELECT * FROM roomdetail ORDER BY room_no;";
+            final String query = "SELECT * FROM rooms ORDER BY room_no;";
             final Statement smt = this.mysqlConnection.createStatement();
             System.out.println(query);
             this.resultSet = smt.executeQuery(query);
@@ -399,7 +399,7 @@ public class RoomMgmtPage extends javax.swing.JFrame {
 
     private void refresh() {
         try {
-            final String query = "SELECT * FROM roomdetail ORDER BY room_no;";
+            final String query = "SELECT * FROM rooms ORDER BY room_no;";
             final Statement smt = this.mysqlConnection.createStatement();
             System.out.println(query);
             this.resultSet = smt.executeQuery(query);
@@ -472,7 +472,7 @@ public class RoomMgmtPage extends javax.swing.JFrame {
                 );
                 if (code == JOptionPane.YES_OPTION) {
                     if (this.noblankTF()) {
-                        final String insertquery = "insert into roomdetail"
+                        final String insertquery = "insert into rooms"
                                 + "(room_no,room_type,room_rate,room_bed) values"
                                 + "('" + rno + "','" + rtype + "'," + rrate + ",'" + rbed + "');";
                         final Statement smt = this.mysqlConnection.createStatement();
@@ -518,7 +518,7 @@ public class RoomMgmtPage extends javax.swing.JFrame {
                 );
                 if (code == JOptionPane.YES_OPTION) {
                     if (this.noblankTF()) {
-                        String updatequery = "update roomdetail set "
+                        String updatequery = "update rooms set "
                                 + "room_type='" + rtype + "',"
                                 + "room_rate=" + rrate + ","
                                 + "room_bed='" + rbed + "' "
@@ -563,7 +563,7 @@ public class RoomMgmtPage extends javax.swing.JFrame {
                         JOptionPane.INFORMATION_MESSAGE
                 );
                 if (code == JOptionPane.YES_OPTION) {
-                    final String updatequery = "DELETE from roomdetail where room_no like '" + rno + "';";
+                    final String updatequery = "DELETE from rooms where room_no like '" + rno + "';";
                     final Statement smt = this.mysqlConnection.createStatement();
                     System.out.println(updatequery);
                     final int success = smt.executeUpdate(updatequery);
@@ -608,7 +608,7 @@ public class RoomMgmtPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Enter Room No. you want to search");
         } else {
             try {
-                final String query = "SELECT * FROM roomdetail where room_no LIKE '" + srno + "';";
+                final String query = "SELECT * FROM rooms where room_no LIKE '" + srno + "';";
                 final Statement smt = this.mysqlConnection.createStatement();
                 System.out.println(query);
                 this.resultSet = smt.executeQuery(query);
@@ -627,7 +627,7 @@ public class RoomMgmtPage extends javax.swing.JFrame {
     private void roomFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_roomFieldCaretUpdate
         if ("Save".equals(this.createBtn.getText())) {
             try {
-                final String query = "SELECT * FROM roomdetail where room_no like '" + this.roomField.getText() + "';";
+                final String query = "SELECT * FROM rooms where room_no like '" + this.roomField.getText() + "';";
                 final Statement smt1 = this.mysqlConnection.createStatement();
                 System.out.println(query);
                 this.rs2 = smt1.executeQuery(query);

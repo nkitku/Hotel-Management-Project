@@ -265,10 +265,10 @@ public class BookingMgmtPage extends javax.swing.JFrame {
             this.sdf = new SimpleDateFormat("dd/MM/yyyy");
             this.sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             this.mysqlConnection = this.mySQLService.getConnection();
-            String query = "select bookingtable.book_id, room_no, cust_no, cust_name, date_fro, date_to "
-                    + "from custdetail, bookingtable "
-                    + "where (custdetail.book_id = bookingtable.book_id) "
-                    + "ORDER BY CUST_NO;";
+            String query = "select booking.book_id, room_no, visitor_no, visitor_name, arrival, departure "
+                    + "from visitors, booking "
+                    + "where (visitors.book_id = booking.book_id) "
+                    + "order by visitor_no;";
             this.mysqlStatement = this.mysqlConnection.createStatement();
             System.out.println(query);
             this.resultSet = this.mysqlStatement.executeQuery(query);
@@ -328,10 +328,10 @@ public class BookingMgmtPage extends javax.swing.JFrame {
 
     private void refreshdata() {
         try {
-            String query = "select bookingtable.book_id, room_no, cust_no, cust_name, date_fro, date_to "
-                    + "from custdetail, bookingtable "
-                    + "where (custdetail.book_id = bookingtable.book_id) "
-                    + "ORDER BY CUST_NO;";
+            String query = "select booking.book_id, room_no, visitor_no, visitor_name, arrival, departure "
+                    + "from visitors, booking "
+                    + "where (visitors.book_id = booking.book_id) "
+                    + "order by visitor_no;";
             this.mysqlStatement = mysqlConnection.createStatement();
             System.out.println(query);
             this.resultSet = mysqlStatement.executeQuery(query);
@@ -401,11 +401,11 @@ public class BookingMgmtPage extends javax.swing.JFrame {
                         JOptionPane.INFORMATION_MESSAGE
                 );
                 if (code == JOptionPane.YES_OPTION) {
-                    String updatequery = "DELETE FROM CUSTDETAIL WHERE BOOK_ID=" + this.bookinIdField.getText() + ";";
+                    String updatequery = "DELETE FROM visitors WHERE BOOK_ID=" + this.bookinIdField.getText() + ";";
                     Statement statement = this.mysqlConnection.createStatement();
                     System.out.println(updatequery);
                     statement.executeUpdate(updatequery);
-                    updatequery = "DELETE FROM BOOKINGTABLE WHERE BOOK_ID=" + this.bookinIdField.getText() + ";";
+                    updatequery = "DELETE FROM booking WHERE BOOK_ID=" + this.bookinIdField.getText() + ";";
                     statement = this.mysqlConnection.createStatement();
                     System.out.println(updatequery);
                     int success = statement.executeUpdate(updatequery);

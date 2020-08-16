@@ -511,7 +511,7 @@ public class StaffMgmtPage extends javax.swing.JFrame {
     //REFRESH THE DATABASE
     private void refreshdata() {
         try {
-            final String query = "SELECT userid, password, staffdesig, staffFName, stafflname, staffadd, staffcontactno "
+            final String query = "SELECT userid, password, staff_desig, staff_first_name, staff_last_name, staff_address, staff_contact "
                     + "FROM login "
                     + "ORDER BY userid;";
             final Statement smt = mysqlConnection.createStatement();
@@ -551,11 +551,11 @@ public class StaffMgmtPage extends javax.swing.JFrame {
                     } else {
                         final String updatequery = "update login set "
                                 + "password='" + spass + "',"
-                                + "Staffdesig='" + sdesig + "',"
-                                + "StaffFName='" + sfname + "',"
-                                + "StaffLName='" + slname + "',"
-                                + "StaffAdd='" + sadd + "',"
-                                + "StaffContactNo='" + snum + "' "
+                                + "staff_desig='" + sdesig + "',"
+                                + "staff_first_name='" + sfname + "',"
+                                + "staff_last_name='" + slname + "',"
+                                + "staff_address='" + sadd + "',"
+                                + "staff_contact='" + snum + "' "
                                 + "where userid = '" + sid + "';";
                         final Statement smt = mysqlConnection.createStatement();
                         final int success = smt.executeUpdate(updatequery);
@@ -611,9 +611,9 @@ public class StaffMgmtPage extends javax.swing.JFrame {
                 q = q + " AND SATFFFNAME='" + firstName + "'";
             }
             if (!lastName.isEmpty()) {
-                q = q + " AND STAFFLNAME='" + lastName + "'";
+                q = q + " AND staff_last_name='" + lastName + "'";
             }
-            q = q + " order by stafffname;";
+            q = q + " order by staff_first_name;";
             try {
                 final Statement smt = this.mysqlConnection.createStatement();
                 System.out.println(q);
@@ -698,7 +698,7 @@ public class StaffMgmtPage extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, "Re-entered password is not same");
                     } else {
                         final String insertquery = "insert into login"
-                                + "(userid, password, Staffdesig, StaffFName, StaffLName, StaffAdd, StaffContactNo) values "
+                                + "(userid, password, staff_desig, staff_first_name, staff_last_name, staff_address, staff_contact) values "
                                 + "(?, ?, ?, ?, ?, ?, ?);";
                         final PreparedStatement smt = this.mysqlConnection.prepareStatement(insertquery);
                         smt.setString(1, this.sid);

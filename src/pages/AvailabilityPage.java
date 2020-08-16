@@ -223,9 +223,9 @@ public class AvailabilityPage extends javax.swing.JFrame {
             long diff = ((departureDate.getTime() - arrivalDate.getTime() + ONE_HOUR) / (ONE_HOUR * 24));
             this.diffday = Long.toString(diff);
             this.totalDaysField.setText(this.diffday + "  day(s)");
-            String sql = "SELECT room_no, room_type, room_bed, room_rate FROM roomdetail "
-                    + "where room_no NOT IN (SELECT room_no FROM bookingtable WHERE DATE(date_to) >= '"
-                    + strdtver1 + "' AND DATE(date_fro) <= '" + strdtver2 + "');";
+            String sql = "SELECT room_no, room_type, room_bed, room_rate FROM rooms "
+                    + "where room_no NOT IN (SELECT room_no FROM booking WHERE DATE(departure) >= '"
+                    + strdtver1 + "' AND DATE(arrival) <= '" + strdtver2 + "');";
             try {
                 this.mysqlStatement = this.mysqlconnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 this.resultSet = this.mysqlStatement.executeQuery(sql);

@@ -464,10 +464,10 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
             this.sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             this.mysqlConnection = this.mySQLService.getConnection();
-            final String query = "select custdetail.*,bookingtable.* "
-                    + "from custdetail,bookingtable "
-                    + "where (custdetail.book_id=bookingtable.book_id) "
-                    + "ORDER BY CUST_NO;";
+            final String query = "select visitors.*,booking.* "
+                    + "from visitors,booking "
+                    + "where (visitors.book_id=booking.book_id) "
+                    + "order by visitor_no;";
             final Statement smt = mysqlConnection.createStatement();
             System.out.println(query);
             this.resultSet = smt.executeQuery(query);
@@ -580,28 +580,28 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
     }//GEN-LAST:event_preBtnActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
-        String q = "select custdetail.*,bookingtable.* "
-                + "from custdetail,bookingtable "
-                + "where (custdetail.book_id=bookingtable.book_id)";
+        String q = "select visitors.*,booking.* "
+                + "from visitors,booking "
+                + "where (visitors.book_id=booking.book_id)";
         if (!this.searchNameField.getText().isEmpty()) {
-            q = q + " AND (Cust_name='" + this.searchNameField.getText() + "')";
+            q = q + " AND (visitor_name='" + this.searchNameField.getText() + "')";
         }
         if (!this.searchCityField.getText().isEmpty()) {
-            q = q + " AND (Cust_city='" + this.searchCityField.getText() + "')";
+            q = q + " AND (visitor_city='" + this.searchCityField.getText() + "')";
         }
         if (!this.searchStateField.getText().isEmpty()) {
-            q = q + " AND (Cust_state='" + this.searchStateField.getText() + "')";
+            q = q + " AND (visitor_state='" + this.searchStateField.getText() + "')";
         }
         if (!this.searchCountryField.getText().isEmpty()) {
-            q = q + " AND (Cust_country='" + searchCountryField.getText() + "')";
+            q = q + " AND (visitor_country='" + searchCountryField.getText() + "')";
         }
         if (!this.searchIdField.getText().isEmpty()) {
-            q = q + " AND (Cust_proof='" + this.searchIdField.getText() + "')";
+            q = q + " AND (visitor_proof='" + this.searchIdField.getText() + "')";
         }
         if (!this.serachIdNumberField.getText().isEmpty()) {
-            q = q + " AND (Cust_id_no='" + this.serachIdNumberField.getText() + "')";
+            q = q + " AND (visitor_id_no='" + this.serachIdNumberField.getText() + "')";
         }
-        q = q + " ORDER By Cust_no;";
+        q = q + " order by visitor_no;";
         try {
             final Statement smt = this.mysqlConnection.createStatement();
             System.out.println(q);
@@ -614,10 +614,10 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void showAllBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllBtnActionPerformed
-        final String query = "select custdetail.*,bookingtable.* "
-                + "from custdetail,bookingtable "
-                + "where (custdetail.book_id=bookingtable.book_id) "
-                + "ORDER BY CUST_NO;";
+        final String query = "select visitors.*,booking.* "
+                + "from visitors,booking "
+                + "where (visitors.book_id=booking.book_id) "
+                + "order by visitor_no;";
         try {
             final Statement smt = mysqlConnection.createStatement();
             System.out.println(query);

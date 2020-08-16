@@ -1,90 +1,65 @@
--- MySQL Administrator dump 1.4
---
--- ------------------------------------------------------
--- Server version	5.1.58-community
-
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
---
--- Create schema hotel
---
+-- Dumping database structure for hotel
+CREATE DATABASE IF NOT EXISTS `hotel` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `hotel`;
 
-CREATE DATABASE IF NOT EXISTS hotel;
-USE hotel;
-
---
--- Definition of table `bookingtable`
---
-
-DROP TABLE IF EXISTS `bookingtable`;
-CREATE TABLE `bookingtable` (
-  `book_id` int(3) NOT NULL,
+-- Dumping structure for table hotel.booking
+CREATE TABLE IF NOT EXISTS `booking` (
+  `book_id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `room_no` varchar(3) DEFAULT NULL,
-  `date_fro` datetime DEFAULT NULL,
-  `date_to` datetime DEFAULT NULL,
-  `no_of_day` int(3) DEFAULT NULL,
+  `arrival` datetime DEFAULT NULL,
+  `departure` datetime DEFAULT NULL,
+  `total_days` int(3) DEFAULT NULL,
   PRIMARY KEY (`book_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
+-- Dumping structure for table hotel.visitors
+CREATE TABLE IF NOT EXISTS `visitors` (
+  `visitor_no` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `visitor_name` varchar(30) DEFAULT NULL,
+  `visitor_add` varchar(40) DEFAULT NULL,
+  `visitor_city` varchar(30) DEFAULT NULL,
+  `visitor_state` varchar(30) DEFAULT NULL,
+  `visitor_country` varchar(30) DEFAULT NULL,
+  `visitor_ph` varchar(10) DEFAULT NULL,
+  `visitor_proof` varchar(20) DEFAULT NULL,
+  `total_adults` varchar(2) DEFAULT NULL,
+  `total_childs` varchar(2) DEFAULT NULL,
+  `visitor_mar_stat` varchar(15) DEFAULT NULL,
+  `visitor_id_no` varchar(30) DEFAULT NULL,
+  `visitor_nation` varchar(30) DEFAULT NULL,
+  `visitor_purpos` varchar(30) DEFAULT NULL,
+  `visitor_bill` int(5) DEFAULT NULL,
+  `book_id` int(3) DEFAULT NULL,
+  PRIMARY KEY (`visitor_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
---
--- Definition of table `custdetail`
---
-
-DROP TABLE IF EXISTS `custdetail`;
-CREATE TABLE `custdetail` (
-  `Cust_name` varchar(30) DEFAULT NULL,
-  `Cust_add` varchar(40) DEFAULT NULL,
-  `Cust_city` varchar(30) DEFAULT NULL,
-  `Cust_state` varchar(30) DEFAULT NULL,
-  `Cust_country` varchar(30) DEFAULT NULL,
-  `Cust_ph` varchar(10) DEFAULT NULL,
-  `Cust_proof` varchar(20) DEFAULT NULL,
-  `Cust_adult` varchar(2) DEFAULT NULL,
-  `Cust_child` varchar(2) DEFAULT NULL,
-  `Cust_mar_stat` varchar(15) DEFAULT NULL,
-  `Cust_id_no` varchar(30) DEFAULT NULL,
-  `Cust_nation` varchar(30) DEFAULT NULL,
-  `Cust_purpos` varchar(30) DEFAULT NULL,
-  `Cust_bill` int(5) DEFAULT NULL,
-  `book_id` int(3) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Definition of table `login`
---
-
-DROP TABLE IF EXISTS `login`;
-CREATE TABLE `login` (
+-- Dumping structure for table hotel.login
+CREATE TABLE IF NOT EXISTS `login` (
   `userid` varchar(20) NOT NULL,
   `password` varchar(20) NOT NULL,
+  `staff_desig` varchar(50) DEFAULT NULL,
+  `staff_first_name` varchar(50) DEFAULT NULL,
+  `staff_last_name` varchar(50) DEFAULT NULL,
+  `staff_address` varchar(50) DEFAULT NULL,
+  `staff_contact` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `login`
---
-
+-- Dumping data for table hotel.login: ~2 rows (approximately)
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` (`userid`,`password`) VALUES ('admin','admin');
+INSERT INTO `login` (`userid`, `password`, `staff_desig`, `staff_first_name`, `staff_last_name`, `staff_address`, `staff_contact`) VALUES
+	('admin', 'admin', 'admin', 'Super', 'Admin', 'Unknown', 'Unknown');
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 
-
---
--- Definition of table `roomdetail`
---
-
-DROP TABLE IF EXISTS `roomdetail`;
-CREATE TABLE `roomdetail` (
+-- Dumping structure for table hotel.rooms
+CREATE TABLE IF NOT EXISTS `rooms` (
   `room_no` varchar(3) NOT NULL,
   `room_type` varchar(10) NOT NULL,
   `room_rate` int(4) NOT NULL,
@@ -92,51 +67,42 @@ CREATE TABLE `roomdetail` (
   PRIMARY KEY (`room_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `roomdetail`
---
+-- Dumping data for table hotel.rooms: ~30 rows (approximately)
+/*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
+INSERT INTO `rooms` (`room_no`, `room_type`, `room_rate`, `room_bed`) VALUES
+	('101', 'Non AC', 700, 'Single'),
+	('102', 'Non AC', 700, 'Single'),
+	('103', 'Non AC', 700, 'Single'),
+	('104', 'Non AC', 700, 'Single'),
+	('105', 'Non AC', 700, 'Single'),
+	('106', 'Non AC', 700, 'Single'),
+	('107', 'Non AC', 700, 'Single'),
+	('108', 'Non AC', 700, 'Single'),
+	('109', 'Non AC', 700, 'Single'),
+	('110', 'Non AC', 700, 'Single'),
+	('111', 'Non AC', 1000, 'Double'),
+	('112', 'Non AC', 1000, 'Double'),
+	('113', 'Non AC', 1000, 'Double'),
+	('114', 'Non AC', 1000, 'Double'),
+	('115', 'Non AC', 1000, 'Double'),
+	('116', 'AC', 1500, 'Single'),
+	('117', 'AC', 1500, 'Single'),
+	('118', 'AC', 1500, 'Single'),
+	('119', 'AC', 1500, 'Single'),
+	('120', 'AC', 1500, 'Single'),
+	('121', 'AC', 1500, 'Single'),
+	('122', 'AC', 1500, 'Single'),
+	('123', 'AC', 1500, 'Single'),
+	('124', 'AC', 2000, 'Double'),
+	('125', 'AC', 2000, 'Double'),
+	('126', 'AC', 2000, 'Double'),
+	('127', 'AC', 2000, 'Double'),
+	('128', 'AC', 2000, 'Double'),
+	('129', 'AC', 2000, 'Double'),
+	('130', 'AC', 2000, 'Double'),
+	('132', 'AC', 500, 'Double');
+/*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `roomdetail` DISABLE KEYS */;
-INSERT INTO `roomdetail` (`room_no`,`room_type`,`room_rate`,`room_bed`) VALUES 
- ('101','Non AC',700,'Single'),
- ('102','Non AC',700,'Single'),
- ('103','Non AC',700,'Single'),
- ('104','Non AC',700,'Single'),
- ('105','Non AC',700,'Single'),
- ('106','Non AC',700,'Single'),
- ('107','Non AC',700,'Single'),
- ('108','Non AC',700,'Single'),
- ('109','Non AC',700,'Single'),
- ('110','Non AC',700,'Single'),
- ('111','Non AC',1000,'Double'),
- ('112','Non AC',1000,'Double'),
- ('113','Non AC',1000,'Double'),
- ('114','Non AC',1000,'Double'),
- ('115','Non AC',1000,'Double'),
- ('116','AC',1500,'Single'),
- ('117','AC',1500,'Single'),
- ('118','AC',1500,'Single'),
- ('119','AC',1500,'Single'),
- ('120','AC',1500,'Single'),
- ('121','AC',1500,'Single'),
- ('122','AC',1500,'Single'),
- ('123','AC',1500,'Single'),
- ('124','AC',2000,'Double'),
- ('125','AC',2000,'Double'),
- ('126','AC',2000,'Double'),
- ('127','AC',2000,'Double'),
- ('128','AC',2000,'Double'),
- ('129','AC',2000,'Double'),
- ('130','AC',2000,'Double');
-/*!40000 ALTER TABLE `roomdetail` ENABLE KEYS */;
-
-
-
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
