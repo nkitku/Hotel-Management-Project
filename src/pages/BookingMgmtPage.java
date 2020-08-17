@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
-
 import services.MySQLService;
 
 public class BookingMgmtPage extends javax.swing.JFrame {
@@ -17,7 +16,6 @@ public class BookingMgmtPage extends javax.swing.JFrame {
     private Statement mysqlStatement;
     private ResultSet resultSet;
     private SimpleDateFormat sdf, sdf1;
-
     private List< javax.swing.JTextField> textFields;
 
     public BookingMgmtPage() {
@@ -38,7 +36,7 @@ public class BookingMgmtPage extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        bookinIdField = new javax.swing.JTextField();
+        bookingIdField = new javax.swing.JTextField();
         roomNoField = new javax.swing.JTextField();
         custNoField = new javax.swing.JTextField();
         nameField = new javax.swing.JTextField();
@@ -77,8 +75,8 @@ public class BookingMgmtPage extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("Booked To");
 
-        bookinIdField.setEditable(false);
-        bookinIdField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bookingIdField.setEditable(false);
+        bookingIdField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         roomNoField.setEditable(false);
         roomNoField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -160,7 +158,7 @@ public class BookingMgmtPage extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(roomNoField, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bookinIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bookingIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(24, 24, 24)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,7 +191,7 @@ public class BookingMgmtPage extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(bookinIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(bookingIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -278,7 +276,7 @@ public class BookingMgmtPage extends javax.swing.JFrame {
                 this.displayRecord();
             }
             this.textFields = Arrays.asList(new javax.swing.JTextField[]{
-                this.bookinIdField,
+                this.bookingIdField,
                 this.roomNoField,
                 this.custNoField,
                 this.nameField,
@@ -297,7 +295,7 @@ public class BookingMgmtPage extends javax.swing.JFrame {
             if (this.resultSet.getRow() < 1) {
                 return;
             }
-            this.bookinIdField.setText(this.resultSet.getString(1));
+            this.bookingIdField.setText(this.resultSet.getString(1));
             this.roomNoField.setText(this.resultSet.getString(2));
             this.custNoField.setText(Integer.toString(this.resultSet.getInt(3)));
             this.nameField.setText(this.resultSet.getString(4));
@@ -326,15 +324,15 @@ public class BookingMgmtPage extends javax.swing.JFrame {
         });
     }
 
-    private void refreshdata() {
+    private void refreshData() {
         try {
             String query = "select booking.book_id, room_no, visitor_no, visitor_name, arrival, departure "
                     + "from visitors, booking "
                     + "where (visitors.book_id = booking.book_id) "
                     + "order by visitor_no;";
-            this.mysqlStatement = mysqlConnection.createStatement();
+            this.mysqlStatement = this.mysqlConnection.createStatement();
             System.out.println(query);
-            this.resultSet = mysqlStatement.executeQuery(query);
+            this.resultSet = this.mysqlStatement.executeQuery(query);
             this.resultSet.next();
             this.displayRecord();
 
@@ -401,22 +399,22 @@ public class BookingMgmtPage extends javax.swing.JFrame {
                         JOptionPane.INFORMATION_MESSAGE
                 );
                 if (code == JOptionPane.YES_OPTION) {
-                    String updatequery = "DELETE FROM visitors WHERE BOOK_ID=" + this.bookinIdField.getText() + ";";
+                    String updateQuery = "DELETE FROM visitors WHERE BOOK_ID=" + this.bookingIdField.getText() + ";";
                     Statement statement = this.mysqlConnection.createStatement();
-                    System.out.println(updatequery);
-                    statement.executeUpdate(updatequery);
-                    updatequery = "DELETE FROM booking WHERE BOOK_ID=" + this.bookinIdField.getText() + ";";
+                    System.out.println(updateQuery);
+                    statement.executeUpdate(updateQuery);
+                    updateQuery = "DELETE FROM booking WHERE BOOK_ID=" + this.bookingIdField.getText() + ";";
                     statement = this.mysqlConnection.createStatement();
-                    System.out.println(updatequery);
-                    int success = statement.executeUpdate(updatequery);
+                    System.out.println(updateQuery);
+                    int success = statement.executeUpdate(updateQuery);
                     if (success > 0) {
                         JOptionPane.showMessageDialog(this, "Record Deleted");
                         this.cancelBookingBtn.setText("Cancel Booking");
-                        clearTextF();
+                        this.clearTextF();
                     } else {
                         JOptionPane.showMessageDialog(this, "Problem in Canceling. Retry");
                     }
-                    refreshdata();
+                    this.refreshData();
                 } else if (code == JOptionPane.NO_OPTION) {
                     this.cancelBookingBtn.setText("Cancel Booking");
                 }
@@ -435,7 +433,7 @@ public class BookingMgmtPage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField arrivalField;
-    private javax.swing.JTextField bookinIdField;
+    private javax.swing.JTextField bookingIdField;
     private javax.swing.JButton cancelBookingBtn;
     private javax.swing.JTextField custNoField;
     private javax.swing.JTextField departureField;

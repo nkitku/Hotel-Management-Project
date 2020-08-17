@@ -51,7 +51,7 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
         phoneField = new javax.swing.JTextField();
         idField = new javax.swing.JTextField();
         idNumberField = new javax.swing.JTextField();
-        maritialField = new javax.swing.JTextField();
+        maritalField = new javax.swing.JTextField();
         nationField = new javax.swing.JTextField();
         totalAdultsField = new javax.swing.JTextField();
         totalChildField = new javax.swing.JTextField();
@@ -77,7 +77,7 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
         searchStateField = new javax.swing.JTextField();
         searchCountryField = new javax.swing.JTextField();
         searchIdField = new javax.swing.JTextField();
-        serachIdNumberField = new javax.swing.JTextField();
+        searchIdNumberField = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         searchBtn = new javax.swing.JButton();
         showAllBtn = new javax.swing.JButton();
@@ -227,7 +227,7 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
                     .addComponent(phoneField)
                     .addComponent(idField)
                     .addComponent(idNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(maritialField, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(maritalField, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,7 +255,7 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
                                             .addComponent(searchStateField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(searchCountryField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(searchIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(serachIdNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(searchIdNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(searchBtn)))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(122, 122, 122)
@@ -336,7 +336,7 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(maritialField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(maritalField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
@@ -384,7 +384,7 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel24)
-                            .addComponent(serachIdNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(searchIdNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(searchBtn)
                         .addGap(18, 18, 18)
@@ -464,9 +464,9 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
             this.sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             this.mysqlConnection = this.mySQLService.getConnection();
-            final String query = "select visitors.*,booking.* "
-                    + "from visitors,booking "
-                    + "where (visitors.book_id=booking.book_id) "
+            final String query = "select visitors.*, booking.* "
+                    + "from visitors, booking "
+                    + "where (visitors.book_id = booking.book_id) "
                     + "order by visitor_no;";
             final Statement smt = mysqlConnection.createStatement();
             System.out.println(query);
@@ -496,7 +496,7 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
             this.phoneField.setText(resultSet.getString(7));
             this.idField.setText(resultSet.getString(8));
             this.idNumberField.setText(resultSet.getString(12));
-            this.maritialField.setText(resultSet.getString(11));
+            this.maritalField.setText(resultSet.getString(11));
             this.nationField.setText(resultSet.getString(13));
             this.totalAdultsField.setText(resultSet.getString(9));
             this.totalChildField.setText(resultSet.getString(10));
@@ -522,7 +522,7 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
             this.phoneField,
             this.idField,
             this.idNumberField,
-            this.maritialField,
+            this.maritalField,
             this.nationField,
             this.totalAdultsField,
             this.totalChildField,
@@ -580,26 +580,26 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
     }//GEN-LAST:event_preBtnActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
-        String q = "select visitors.*,booking.* "
-                + "from visitors,booking "
-                + "where (visitors.book_id=booking.book_id)";
+        String q = "select visitors.*, booking.* "
+                + "from visitors, booking "
+                + "where (visitors.book_id = booking.book_id)";
         if (!this.searchNameField.getText().isEmpty()) {
-            q = q + " AND (visitor_name='" + this.searchNameField.getText() + "')";
+            q = q + " and (visitor_name = '" + this.searchNameField.getText() + "')";
         }
         if (!this.searchCityField.getText().isEmpty()) {
-            q = q + " AND (visitor_city='" + this.searchCityField.getText() + "')";
+            q = q + " and (visitor_city = '" + this.searchCityField.getText() + "')";
         }
         if (!this.searchStateField.getText().isEmpty()) {
-            q = q + " AND (visitor_state='" + this.searchStateField.getText() + "')";
+            q = q + " and (visitor_state = '" + this.searchStateField.getText() + "')";
         }
         if (!this.searchCountryField.getText().isEmpty()) {
-            q = q + " AND (visitor_country='" + searchCountryField.getText() + "')";
+            q = q + " AND (visitor_country = '" + searchCountryField.getText() + "')";
         }
         if (!this.searchIdField.getText().isEmpty()) {
-            q = q + " AND (visitor_proof='" + this.searchIdField.getText() + "')";
+            q = q + " and (visitor_proof = '" + this.searchIdField.getText() + "')";
         }
-        if (!this.serachIdNumberField.getText().isEmpty()) {
-            q = q + " AND (visitor_id_no='" + this.serachIdNumberField.getText() + "')";
+        if (!this.searchIdNumberField.getText().isEmpty()) {
+            q = q + " and (visitor_id_no = '" + this.searchIdNumberField.getText() + "')";
         }
         q = q + " order by visitor_no;";
         try {
@@ -607,16 +607,16 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
             System.out.println(q);
             this.resultSet = smt.executeQuery(q);
             this.resultSet.next();
-            displayRecord();
+            this.displayRecord();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerMgmtPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void showAllBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllBtnActionPerformed
-        final String query = "select visitors.*,booking.* "
-                + "from visitors,booking "
-                + "where (visitors.book_id=booking.book_id) "
+        final String query = "select visitors.*, booking.* "
+                + "from visitors, booking "
+                + "where (visitors.book_id = booking.book_id) "
                 + "order by visitor_no;";
         try {
             final Statement smt = mysqlConnection.createStatement();
@@ -671,7 +671,7 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton lastBtn;
-    private javax.swing.JTextField maritialField;
+    private javax.swing.JTextField maritalField;
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField nationField;
     private javax.swing.JButton nextBtn;
@@ -684,7 +684,7 @@ public class CustomerMgmtPage extends javax.swing.JFrame {
     private javax.swing.JTextField searchIdField;
     private javax.swing.JTextField searchNameField;
     private javax.swing.JTextField searchStateField;
-    private javax.swing.JTextField serachIdNumberField;
+    private javax.swing.JTextField searchIdNumberField;
     private javax.swing.JButton showAllBtn;
     private javax.swing.JTextField stateField;
     private javax.swing.JTextField totalAdultsField;

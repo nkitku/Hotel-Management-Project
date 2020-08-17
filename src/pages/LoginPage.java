@@ -166,7 +166,7 @@ public class LoginPage extends javax.swing.JFrame {
         try {
             final String userId = this.userIdField.getText();
             final String password = new String(this.passwordField.getPassword());
-            final String sql = "Select * from login where (`userid` = ? and `password` = ?);";
+            final String sql = "select * from users where (`username` = ? and `password` = ?);";
             final PreparedStatement smt = this.mysqlConnection.prepareStatement(sql);
             smt.setString(1, userId);
             smt.setString(2, password);
@@ -214,10 +214,7 @@ public class LoginPage extends javax.swing.JFrame {
                         break;
                     }
                 }
-            } catch (ClassNotFoundException
-                    | InstantiationException
-                    | IllegalAccessException
-                    | javax.swing.UnsupportedLookAndFeelException ex) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
                 java.util.logging.Logger.getLogger(LoginPage.class.getName())
                         .log(java.util.logging.Level.SEVERE, null, ex);
             }

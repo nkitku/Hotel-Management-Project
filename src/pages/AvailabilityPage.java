@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.*;
-
 import services.MySQLService;
 
 public class AvailabilityPage extends javax.swing.JFrame {
@@ -16,13 +15,13 @@ public class AvailabilityPage extends javax.swing.JFrame {
     /**
      * Creates new form Availability
      */
-    private Connection mysqlconnection;
+    private Connection mysqlConnection;
     private MySQLService mySQLService;
     private Statement mysqlStatement;
     private ResultSet resultSet;
     private java.util.Date dt1, dt2, dt3;
     private Object obj1, obj2, obj3, obj4;
-    private String diffday;
+    private String totalDays;
     private Calendar calendarService;
 
     public AvailabilityPage() {
@@ -186,7 +185,7 @@ public class AvailabilityPage extends javax.swing.JFrame {
         Container c = this.getContentPane();
         c.setBackground(new java.awt.Color(153, 255, 153));
         try {
-            this.mysqlconnection = this.mySQLService.getConnection();
+            this.mysqlConnection = this.mySQLService.getConnection();
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             this.dt3 = sdf2.parse(((String) sdf1.format(this.calendarService.getTime())) + " 00:00:00");
@@ -221,13 +220,13 @@ public class AvailabilityPage extends javax.swing.JFrame {
             String strdtver1 = (String) sdf.format(arrivalDate);
             String strdtver2 = (String) sdf.format(departureDate);
             long diff = ((departureDate.getTime() - arrivalDate.getTime() + ONE_HOUR) / (ONE_HOUR * 24));
-            this.diffday = Long.toString(diff);
-            this.totalDaysField.setText(this.diffday + "  day(s)");
-            String sql = "SELECT room_no, room_type, room_bed, room_rate FROM rooms "
-                    + "where room_no NOT IN (SELECT room_no FROM booking WHERE DATE(departure) >= '"
-                    + strdtver1 + "' AND DATE(arrival) <= '" + strdtver2 + "');";
+            this.totalDays = Long.toString(diff);
+            this.totalDaysField.setText(this.totalDays + "  day(s)");
+            String sql = "select room_no, room_type, room_bed, room_rate from rooms "
+                    + "where room_no not in (select room_no from booking where date(departure) >= '"
+                    + strdtver1 + "' and date(arrival) <= '" + strdtver2 + "');";
             try {
-                this.mysqlStatement = this.mysqlconnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                this.mysqlStatement = this.mysqlConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 this.resultSet = this.mysqlStatement.executeQuery(sql);
                 int i = 0;
                 while (resultSet.next()) {
@@ -257,7 +256,7 @@ public class AvailabilityPage extends javax.swing.JFrame {
 
     // OPENS THE BOOKING FRAME FOR BOOKING CONFIRMATION    
     private void bookRoomBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookRoomBtnActionPerformed
-        new BookRoomPage(this.obj1, this.obj2, this.obj3, this.obj4, this.dt1, this.dt2, this.diffday).setVisible(true);
+        new BookRoomPage(this.obj1, this.obj2, this.obj3, this.obj4, this.dt1, this.dt2, this.totalDays).setVisible(true);
     }//GEN-LAST:event_bookRoomBtnActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked

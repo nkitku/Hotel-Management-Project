@@ -66,7 +66,7 @@ public class StaffMgmtPage extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Staff Managemetnt");
+        setTitle("Staff Management");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -437,7 +437,7 @@ public class StaffMgmtPage extends javax.swing.JFrame {
                 this.searchUserIdField, this.searchFNameField, this.searchLNameField
             });
             this.mysqlConnection = this.mySQLService.getConnection();
-            this.refreshdata();
+            this.refreshData();
             this.displayRecord();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -509,11 +509,11 @@ public class StaffMgmtPage extends javax.swing.JFrame {
     }
 
     //REFRESH THE DATABASE
-    private void refreshdata() {
+    private void refreshData() {
         try {
-            final String query = "SELECT userid, password, staff_desig, staff_first_name, staff_last_name, staff_address, staff_contact "
-                    + "FROM login "
-                    + "ORDER BY userid;";
+            final String query = "select username, password, role, first_name, last_name, address, contact "
+                    + "from users "
+                    + "order by username;";
             final Statement smt = mysqlConnection.createStatement();
             this.resultSet = smt.executeQuery(query);
             System.out.println(query);
@@ -549,22 +549,22 @@ public class StaffMgmtPage extends javax.swing.JFrame {
                     } else if (!spass.equals(spass1)) {
                         JOptionPane.showMessageDialog(this, "Re-entered password is not same");
                     } else {
-                        final String updatequery = "update login set "
+                        final String updateQuery = "update users set "
                                 + "password='" + spass + "',"
-                                + "staff_desig='" + sdesig + "',"
-                                + "staff_first_name='" + sfname + "',"
-                                + "staff_last_name='" + slname + "',"
-                                + "staff_address='" + sadd + "',"
-                                + "staff_contact='" + snum + "' "
-                                + "where userid = '" + sid + "';";
+                                + "role='" + sdesig + "',"
+                                + "first_name='" + sfname + "',"
+                                + "last_name='" + slname + "',"
+                                + "address='" + sadd + "',"
+                                + "contact='" + snum + "' "
+                                + "where username = '" + sid + "';";
                         final Statement smt = mysqlConnection.createStatement();
-                        final int success = smt.executeUpdate(updatequery);
-                        System.out.println(updatequery);
+                        final int success = smt.executeUpdate(updateQuery);
+                        System.out.println(updateQuery);
                         if (success > 0) {
                             JOptionPane.showMessageDialog(this, "Record Modified!!");
                             this.editBtn.setText("Edit");
                         } else {
-                            JOptionPane.showMessageDialog(this, "Problem in mofifying. Retry/Fill all FIELDS");
+                            JOptionPane.showMessageDialog(this, "Problem in modifying. Retry/Fill all fields");
                         }
                     }
                 } else if (code == JOptionPane.NO_OPTION) {
@@ -572,7 +572,7 @@ public class StaffMgmtPage extends javax.swing.JFrame {
                     this.enableTextF2();
                     this.editBtn.setText("Edit");
                     try {
-                        final String query = "SELECT * FROM LOGIN WHERE USERID = '" + this.userIdField.getText() + "';";
+                        final String query = "select * from login where username = '" + this.userIdField.getText() + "';";
                         final Statement smt2 = this.mysqlConnection.createStatement();
                         this.rs2 = smt2.executeQuery(query);
                         System.out.println(query);
@@ -582,7 +582,7 @@ public class StaffMgmtPage extends javax.swing.JFrame {
                         e.printStackTrace();
                     }
                 }
-                this.refreshdata();
+                this.refreshData();
             } else if (action.equals("Edit")) {
                 JOptionPane.showMessageDialog(this, "You are about to change the existing information of current selected staff");
                 this.disableTextF2();
@@ -603,17 +603,17 @@ public class StaffMgmtPage extends javax.swing.JFrame {
         if (userId.isEmpty() && firstName.isEmpty() && lastName.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Fill at least one field for search");
         } else {
-            String q = "SELECT *FROM LOGIN WHERE (1=1)";
+            String q = "select * from users where (1=1)";
             if (!userId.isEmpty()) {
-                q = q + " AND userid='" + userId + "'";
+                q = q + " and username='" + userId + "'";
             }
             if (!firstName.isEmpty()) {
-                q = q + " AND SATFFFNAME='" + firstName + "'";
+                q = q + " and first_name='" + firstName + "'";
             }
             if (!lastName.isEmpty()) {
-                q = q + " AND staff_last_name='" + lastName + "'";
+                q = q + " and last_name='" + lastName + "'";
             }
-            q = q + " order by staff_first_name;";
+            q = q + " order by first_name;";
             try {
                 final Statement smt = this.mysqlConnection.createStatement();
                 System.out.println(q);
@@ -697,10 +697,10 @@ public class StaffMgmtPage extends javax.swing.JFrame {
                     } else if (this.spass.equals(this.spass1) == false) {
                         JOptionPane.showMessageDialog(this, "Re-entered password is not same");
                     } else {
-                        final String insertquery = "insert into login"
-                                + "(userid, password, staff_desig, staff_first_name, staff_last_name, staff_address, staff_contact) values "
+                        final String insertQuery = "insert into users"
+                                + "(username, password, role, first_name, last_name, address, contact) values "
                                 + "(?, ?, ?, ?, ?, ?, ?);";
-                        final PreparedStatement smt = this.mysqlConnection.prepareStatement(insertquery);
+                        final PreparedStatement smt = this.mysqlConnection.prepareStatement(insertQuery);
                         smt.setString(1, this.sid);
                         smt.setString(2, this.spass);
                         smt.setString(3, this.sdesig);
@@ -722,12 +722,12 @@ public class StaffMgmtPage extends javax.swing.JFrame {
                 } else if (code == JOptionPane.NO_OPTION) {
                     this.createBtn.setText("New");
                     this.clearTextF();
-                    this.refreshdata();
+                    this.refreshData();
                     this.displayRecord();
                     this.disableTextF();
                     this.enableTextF2();
                 }
-                this.refreshdata();
+                this.refreshData();
 
             } else if (action.equals("New")) {
                 this.clearTextF();
@@ -754,10 +754,10 @@ public class StaffMgmtPage extends javax.swing.JFrame {
                         JOptionPane.INFORMATION_MESSAGE
                 );
                 if (code == JOptionPane.YES_OPTION) {
-                    final String updatequery = "DELETE from login where userid = '" + sid + "';";
+                    final String updateQuery = "delete from users where username = '" + sid + "';";
                     final Statement smt = this.mysqlConnection.createStatement();
-                    final int success = smt.executeUpdate(updatequery);
-                    System.out.println(updatequery);
+                    final int success = smt.executeUpdate(updateQuery);
+                    System.out.println(updateQuery);
                     if (success > 0) {
                         JOptionPane.showMessageDialog(this, "Record Deleted");
                         this.deleteBtn.setText("Delete");
@@ -765,7 +765,7 @@ public class StaffMgmtPage extends javax.swing.JFrame {
                     } else {
                         JOptionPane.showMessageDialog(this, "Problem in deletion. Retry");
                     }
-                    this.refreshdata();
+                    this.refreshData();
                 } else if (code == JOptionPane.NO_OPTION) {
                     this.deleteBtn.setText("Delete");
                 }
@@ -792,7 +792,7 @@ public class StaffMgmtPage extends javax.swing.JFrame {
             }
             this.lastUserIdEntered = userId;
             try {
-                final String q = "SELECT * FROM LOGIN WHERE USERID ='" + userId + "'";
+                final String q = "select * from users where username ='" + userId + "'";
                 final Statement smt1 = mysqlConnection.createStatement();
                 this.rs1 = smt1.executeQuery(q);
                 System.out.println(q);
@@ -800,7 +800,7 @@ public class StaffMgmtPage extends javax.swing.JFrame {
                 if (this.rs1.next()) {
                     this.createBtn.setEnabled(false);
                     this.jLabel14.setForeground(new java.awt.Color(153, 0, 0));
-                    this.jLabel14.setText("THIS USERID ALREADY USED. Try another");
+                    this.jLabel14.setText("This username already used try another");
                 } else {
                     this.createBtn.setEnabled(true);
                     this.jLabel14.setText("");

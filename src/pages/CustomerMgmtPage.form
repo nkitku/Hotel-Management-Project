@@ -134,7 +134,7 @@
                       <Component id="phoneField" alignment="0" max="32767" attributes="0"/>
                       <Component id="idField" alignment="0" max="32767" attributes="0"/>
                       <Component id="idNumberField" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                      <Component id="maritialField" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
+                      <Component id="maritalField" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
@@ -165,7 +165,7 @@
                                               <Component id="searchStateField" min="-2" pref="150" max="-2" attributes="0"/>
                                               <Component id="searchCountryField" min="-2" pref="150" max="-2" attributes="0"/>
                                               <Component id="searchIdField" min="-2" pref="150" max="-2" attributes="0"/>
-                                              <Component id="serachIdNumberField" min="-2" pref="150" max="-2" attributes="0"/>
+                                              <Component id="searchIdNumberField" min="-2" pref="150" max="-2" attributes="0"/>
                                               <Component id="searchBtn" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -276,7 +276,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="maritialField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="maritalField" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -337,7 +337,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="serachIdNumberField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="searchIdNumberField" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="searchBtn" min="-2" max="-2" attributes="0"/>
@@ -443,7 +443,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="idNumberField">
         </Component>
-        <Component class="javax.swing.JTextField" name="maritialField">
+        <Component class="javax.swing.JTextField" name="maritalField">
         </Component>
         <Component class="javax.swing.JTextField" name="nationField">
         </Component>
@@ -555,7 +555,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="searchIdField">
         </Component>
-        <Component class="javax.swing.JTextField" name="serachIdNumberField">
+        <Component class="javax.swing.JTextField" name="searchIdNumberField">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel25">
           <Properties>

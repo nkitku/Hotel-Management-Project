@@ -80,8 +80,8 @@ public class BookRoomPage extends javax.swing.JFrame {
         ta = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         ci = new javax.swing.JLabel();
-        bookbtn = new javax.swing.JButton();
-        cancelbtn = new javax.swing.JButton();
+        bookBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Room Booking");
@@ -103,7 +103,7 @@ public class BookRoomPage extends javax.swing.JFrame {
         jLabel1.setText("Name");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel4.setText("Adress");
+        jLabel4.setText("Address");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("City");
@@ -311,17 +311,17 @@ public class BookRoomPage extends javax.swing.JFrame {
         ci.setForeground(new java.awt.Color(204, 255, 204));
         ci.setText("Room Type");
 
-        bookbtn.setText("Book Room");
-        bookbtn.addActionListener(new java.awt.event.ActionListener() {
+        bookBtn.setText("Book Room");
+        bookBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bookbtnActionPerformed(evt);
+                bookBtnActionPerformed(evt);
             }
         });
 
-        cancelbtn.setText("Cancel");
-        cancelbtn.addActionListener(new java.awt.event.ActionListener() {
+        cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelbtnActionPerformed(evt);
+                cancelBtnActionPerformed(evt);
             }
         });
 
@@ -360,13 +360,13 @@ public class BookRoomPage extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cancelbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cancelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bookbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(bookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bookbtn, cancelbtn});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bookBtn, cancelBtn});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,8 +391,8 @@ public class BookRoomPage extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bookbtn)
-                    .addComponent(cancelbtn))
+                    .addComponent(bookBtn)
+                    .addComponent(cancelBtn))
                 .addContainerGap())
         );
 
@@ -493,7 +493,7 @@ public class BookRoomPage extends javax.swing.JFrame {
     }
 
 
-    private void bookbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookbtnActionPerformed
+    private void bookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookBtnActionPerformed
         try {
             if (this.isAnyEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please fill all fields");
@@ -515,25 +515,25 @@ public class BookRoomPage extends javax.swing.JFrame {
                 this.cpur = this.purpose.getText();
 
                 int code = JOptionPane.showConfirmDialog(this, "Room No. " + this.roomno + " is booked for Mr./Ms. " + this.cname + " for "
-                        + "diffd..!", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                        + this.diffd + "..!", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
                 if (code == JOptionPane.YES_OPTION) {
                     String sql = "INSERT INTO `booking` (`room_no`, `arrival`, `departure`, `total_days`)"
                             + " VALUES ( '" + this.roomno + "', '" + this.dt1 + "', '" + this.dt2 + "', " + this.diffd + ");";
-
-                    Statement mysqlStatement = this.mysqlConnection.createStatement();
-                    mysqlStatement.executeUpdate(sql);
-                    sql = "SELECT * FROM booking WHERE ROOM_NO='" + roomno + "' AND arrival='" + dt1 + "' AND departure='" + dt2 + "';";
-                    mysqlStatement = this.mysqlConnection.createStatement();
-                    this.rs = mysqlStatement.executeQuery(sql);
+                    System.out.println(sql);
+                    PreparedStatement mysqlStatement = this.mysqlConnection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                    mysqlStatement.executeUpdate();
+                    this.rs = mysqlStatement.getGeneratedKeys();
                     this.rs.next();
                     this.bookid = this.rs.getString(1);
+                    System.out.println(this.bookid);
                     sql = "insert into `visitors` (`visitor_name`, `visitor_add`, `visitor_city`, `visitor_state`, `visitor_country`, `visitor_ph`, "
                             + "`visitor_proof`, `total_adults`, `total_childs`, `visitor_mar_stat`, `visitor_id_no`, `visitor_nation`, `visitor_purpos`, "
                             + "`visitor_bill`, `book_id`)"
                             + " values ('" + this.cname + "','" + this.cadd + "', '" + this.ccity + "', '" + this.cstat + "', '" + this.ccoun + "', '" + this.cph + "', '" + this.cproof + "',"
                             + " '" + this.cadult + "', '" + this.cchild + "', '" + this.cmars + "', '" + this.cidno + "', '" + this.cnation + "', '" + this.cpur + "'," + this.amount + ", " + this.bookid + ");";
-                    mysqlStatement = mysqlConnection.createStatement();
-                    mysqlStatement.executeUpdate(sql);
+                    System.out.println(sql);
+                    mysqlStatement = this.mysqlConnection.prepareStatement(sql);
+                    mysqlStatement.executeUpdate();
                     JOptionPane.showMessageDialog(this, "Room Booked!!");
                 } else if (code == JOptionPane.NO_OPTION) {
                     // Nothing to do
@@ -542,20 +542,20 @@ public class BookRoomPage extends javax.swing.JFrame {
         } catch (HeadlessException | SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
-    }//GEN-LAST:event_bookbtnActionPerformed
+    }//GEN-LAST:event_bookBtnActionPerformed
 
-    private void cancelbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelbtnActionPerformed
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         this.dispose();
-    }//GEN-LAST:event_cancelbtnActionPerformed
+    }//GEN-LAST:event_cancelBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField add;
     private javax.swing.JLabel adult;
     private javax.swing.JTextField adults;
     private javax.swing.JTextField amt;
-    private javax.swing.JButton bookbtn;
+    private javax.swing.JButton bookBtn;
     private javax.swing.JLabel bt;
-    private javax.swing.JButton cancelbtn;
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JTextField child;
     private javax.swing.JLabel ci;
     private javax.swing.JTextField city;
